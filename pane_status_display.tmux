@@ -8,5 +8,7 @@ source "$PLUGIN_LIB_DIR/functions.zsh" "$PLUGIN_DISPLAYS_DIR"
 source "$PLUGIN_LIB_DIR/commands.zsh"
 
 
+pane_path=$1
+pane_id=$2
 
-
+show_displays $pane_path $display
