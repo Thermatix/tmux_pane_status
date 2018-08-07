@@ -1,3 +1,3 @@
 #!/usr/local/bin/zsh -f
 
-githud zsh
+rbenv version-name
