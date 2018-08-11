@@ -26,9 +26,9 @@ function show_displays() {
   pane_path=$1
   pane_id=$2
 
-  if [ get_tmux_opt "pane_status" "$2" = "1" ]; then
+  # if [ get_tmux_opt "pane_status" "$2" = "1" ]; then
     pushd pane_path
     echo "$(build_status $pane_path)"
-    popd
+    # popd
   fi
 }

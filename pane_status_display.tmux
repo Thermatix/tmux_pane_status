@@ -15,4 +15,4 @@ source "$PLUGIN_LIB_DIR/commands.zsh"
 pane_path=$1
 pane_id=$2
 
-show_displays $pane_path $display
+# show_displays $pane_path $display
