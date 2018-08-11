@@ -1,30 +1,5 @@
 #!/usr/bin/env bash
 
-# function build_status {
-# # expects PANE_sTATUS_DISPLAYS to be defined
-#   pane_path=$1
-#   output=""
-#   delimit=${PANE_STATUS_DELIMIT:-" "}
-#   for display in $PANE_STATUS_DISPLAYS; do
-#     output+="$(displays_dir/$display.zsh $pane_path $pane_id)$delimit"
-#   done
-#   output
-# }
-#
-#
-#
-# function show_displays {
-#   pane_path=$1
-#   pane_id=$2
-#
-#   # if [ get_tmux_opt "pane_status" "$2" = "1" ]; then
-#     pushd pane_path
-#     echo "$(build_status $pane_path)"
-#     popd
-#   # fi
-# }
-#
-
 function turn_on_pane_status {
   set_tmux_opt 'pane_status' '1'
 }
@@ -39,7 +14,7 @@ function do_interpolation {
 	local all_interpolated="$1"
   local commands="$2"
   for cmd in "$[!commands[@]]"; do
-		all_interpolated="${all_interpolated/#\{${cmd}\}/${commands[$cmd]}}"
+		all_interpolated="${all_interpolated/${cmd}/${commands[$cmd]}}"
   done
 	echo "$all_interpolated"
 }

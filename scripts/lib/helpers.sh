@@ -25,7 +25,7 @@ function set_tmux_pane_opt {
 function cmd {
   local root="$1"
   local cmd="$2"
-  echo "[\"$cmd\"]=\"#($root/scripts/displays/$cmd.sh \"#{pane_current_path}\"  \"#{pane_id}\")\"  "
+  echo "[#{\"$cmd\"}]=\"#($root/scripts/displays/$cmd.sh \"#{pane_current_path}\"  \"#{pane_id}\")\"  "
 }
 
 function get_tmux_pane_opt {
