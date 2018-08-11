@@ -1,18 +1,17 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 
 function cwd {
-  "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+  echo "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 }
 
-PLUGIN_ROOT_DIR=cwd
-PLUGIN_LIB_DIR="$PLUGIN_ROOT_DIR/lib"
-PLUGIN_DISPLAYS_DIR="$PLUGIN_LIB_DIR/displays"
+PLUGIN_ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-source "$PLUGIN_LIB_DIR/functions.zsh" "$PLUGIN_DISPLAYS_DIR"
-source "$PLUGIN_LIB_DIR/commands.zsh"
+source "$PLUGIN_ROOT_DIR/scripts/lib/functions.sh"
+source "$PLUGIN_ROOT_DIR/scripts/lib/helpers.sh"
 
-
-pane_path=$1
-pane_id=$2
+commands=(
+["rbenv_ruby_ver"]="#($PLUGIN_ROOT_DIR/scripts/displays/rbenv_ruby_ver.sh)"
+  # [""]="$PLUGIN_ROOT_DIR/scripts/displays/"
+)
 
 # show_displays $pane_path $display
