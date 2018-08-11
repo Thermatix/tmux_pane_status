@@ -16,3 +16,4 @@ commands=(
 )
 main "$commands"
 # show_displays $pane_path $display
+echo "$commands"

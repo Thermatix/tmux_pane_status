@@ -17,19 +17,18 @@ function get_tmux_option {
 	fi
 }
 
-
 function set_tmux_pane_opt {
   tmux set -q "@$1_$TMUX_PANE" "$2"
+}
+
+function get_tmux_pane_opt {
+    tmux show -v "@$1_$2"
 }
 
 function cmd {
   local root="$1"
   local cmd="$2"
   echo "[#{\"$cmd\"}]=\"#($root/scripts/displays/$cmd.sh \"#{pane_current_path}\"  \"#{pane_id}\")\"  "
-}
-
-function get_tmux_pane_opt {
-    tmux show -v "@$1_$2"
 }
 
 function is_osx {
