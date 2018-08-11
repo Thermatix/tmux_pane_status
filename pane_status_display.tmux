@@ -1,6 +1,10 @@
 #!/usr/bin/env zsh
 
-PLUGIN_ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+function cwd {
+  "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+}
+
+PLUGIN_ROOT_DIR=cwd
 PLUGIN_LIB_DIR="$PLUGIN_ROOT_DIR/lib"
 PLUGIN_DISPLAYS_DIR="$PLUGIN_LIB_DIR/displays"
 
