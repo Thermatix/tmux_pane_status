@@ -56,8 +56,7 @@ function turn_off_pane_status {
 
 function execute {
   cmd="$@"
-  output="$(cd $(pane_current_path) && ${cmd[@]})"
-  echo "$output"
+  echo "$(cd $(pane_current_path) && ${cmd[@]})"
 }
 
 function list_commands {
