@@ -19,11 +19,26 @@ function get_tmux_w_option {
 }
 
 function set_tmux_pane_opt {
-  tmux set -q "@$1_$TMUX_PANE" "$2"
+  option_name="$1"
+  tmux set -q "@$option_name_$TMUX_PANE" "$2"
 }
 
 function get_tmux_pane_opt {
-    tmux show -v "@$1_$2"
+  option_name="$1"
+  pane_id="$2"
+  tmux show -vq "@$option_name_$pane_id"
+}
+
+function display_status_for {
+  echo "$(get_tmux_pane_opt "pane_status" "$TMUX_PANE")"
+}
+
+function turn_on_pane_status {
+  set_tmux_pane_opt 'pane_status' '1'
+}
+
+function turn_off_pane_status {
+  set_tmux_pane_opt 'pane_status' '0'
 }
 
 function list_commands {

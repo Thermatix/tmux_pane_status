@@ -1,10 +1,6 @@
 #!/usr/bin/env bash
 
-function cwd {
-  echo "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-}
-
-plugin_root_dir="$(cwd)"
+plugin_root_dir=""$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )""
 source "$plugin_root_dir/scripts/lib/functions.sh"
 source "$plugin_root_dir/scripts/lib/helpers.sh"
 
@@ -17,4 +13,6 @@ list_commands plugin_root_dir cmds rbenv githud
 # done
 
 main cmds
+
+tmux bind-key d run-shell "$plugin_root_dir/scripts/switch_pane_status_display.sh"
 
