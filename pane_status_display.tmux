@@ -4,16 +4,17 @@ function cwd {
   echo "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 }
 
-PLUGIN_ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+plugin_root_dir="$(cwd)"
+source "$plugin_root_dir/scripts/lib/functions.sh"
+source "$plugin_root_dir/scripts/lib/helpers.sh"
 
-source "$PLUGIN_ROOT_DIR/scripts/lib/functions.sh"
-source "$PLUGIN_ROOT_DIR/scripts/lib/helpers.sh"
+declare -A cmds
 
-commands=(
- cmd "$PLUGIN_ROOT_DIR" "rbenv_ruby_ver"
-# ["rbenv_ruby_ver"]="#($PLUGIN_ROOT_DIR/scripts/displays/rbenv_ruby_ver.sh)"
-  # [""]="$PLUGIN_ROOT_DIR/scripts/displays/"
-)
-main "$commands"
-# show_displays $pane_path $display
-echo "$commands"
+list_commands plugin_root_dir cmds rbenv githud
+
+# for k in "${!cmds[@]}"; do
+#   echo "$k:${cmds[$k]}"
+# done
+
+main cmds
+

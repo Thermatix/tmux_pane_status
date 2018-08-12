@@ -1,15 +1,16 @@
 #!/usr/bin/env bash
 
-function set_tmux_option {
+function set_tmux_w_option {
 	local option=$1
 	local value=$2
-	tmux set-option -gq "$option" "$value"
+  echo "$option:$value"
+	tmux setw -gq "$option" "$value"
 }
 
-function get_tmux_option {
+function get_tmux_w_option {
 	local option="$1"
 	local default_value="$2"
-	local option_value="$(tmux show-option -gqv "$option")"
+	local option_value="$(tmux showw -gv "$option")"
 	if [ -z "$option_value" ]; then
 		echo "$default_value"
 	else
@@ -25,10 +26,21 @@ function get_tmux_pane_opt {
     tmux show -v "@$1_$2"
 }
 
+function list_commands {
+  declare -n root="$1"
+  declare -n c="$2"
+  local command_list="${*:3}"
+  for cmd in $command_list; do
+    c["#{$cmd}"]="#($root/scripts/displays/$cmd.sh \"#{pane_current_path}\" \"#{pane_id}\")"
+  done
+}
+
 function cmd {
   local root="$1"
   local cmd="$2"
-  echo "[#{\"$cmd\"}]=\"#($root/scripts/displays/$cmd.sh \"#{pane_current_path}\"  \"#{pane_id}\")\"  "
+  local key="[#{\"$cmd\"}]"
+  local value=
+  echo "$key=\"#($value)\""
 }
 
 function is_osx {
