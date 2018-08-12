@@ -22,6 +22,10 @@ function pane_id {
   echo "$(tmux display -p '#{pane_index}')"
 }
 
+function pane_current_path {
+  echo "$(tmux display -p '#{pane_current_path}')"
+}
+
 function set_tmux_pane_opt {
   option_name="$1"
   value=$2
@@ -33,8 +37,8 @@ function get_tmux_pane_opt {
   tmux show -vq "@$option_name_$(pane_id)"
 }
 
-function display_status_for {
-  echo "$(get_tmux_pane_opt "$(pane_id)")"
+function display_status_for_pane  {
+  [ "$(get_tmux_pane_opt 'pane_status')" = "1" ]
 }
 
 function turn_on_pane_status {
@@ -45,12 +49,22 @@ function turn_off_pane_status {
   set_tmux_pane_opt 'pane_status' '0'
 }
 
+function execute {
+  cmd=$1
+  if  display_status_for_pane ; then
+    pushd "$(pane_current_path)"
+    output="$($cmd)"
+    popd
+    echo "$output"
+  fi
+}
+
 function list_commands {
   declare -n root="$1"
   declare -n c="$2"
   local command_list="${*:3}"
   for cmd in $command_list; do
-    c["#{$cmd}"]="#($root/scripts/displays/$cmd.sh \"#{pane_current_path}\" \"#{pane_id}\")"
+    c["#{$cmd}"]="#($root/scripts/displays/$cmd.sh)"
   done
 }
 

@@ -2,13 +2,11 @@
 
 source "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../lib/helpers.sh"
 
-pane_path=$1
-pane_id=$2
-
-
-
-if [ "$(display_status_for "$pane_id")" = "1" ]; then
-  pushd "$pane_path"
-    echo "$(rbenv version-name)"
-  popd
+if display_status_for_pane; then
+  if [ -f "$(pane_current_path)/Gemfile" ]; then
+    cd "$(pane_current_path)"
+    output="ruby: $(rbenv version-name)"
+    cd -
+    echo "$output"
+  fi
 fi

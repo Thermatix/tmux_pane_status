@@ -6,7 +6,7 @@ source "$plugin_root_dir/scripts/lib/helpers.sh"
 
 declare -A cmds
 
-list_commands plugin_root_dir cmds rbenv githud
+list_commands plugin_root_dir cmds rbenv githud rust
 
 # for k in "${!cmds[@]}"; do
 #   echo "$k:${cmds[$k]}"
@@ -14,5 +14,5 @@ list_commands plugin_root_dir cmds rbenv githud
 
 main cmds
 
-tmux bind-key d run-shell "$plugin_root_dir/scripts/switch_pane_status_display.sh"
+tmux bind-key D run-shell "$plugin_root_dir/scripts/switch_pane_status_display.sh"
 

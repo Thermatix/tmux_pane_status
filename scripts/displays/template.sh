@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
-pane_path=$1
-pane_id=$2
-pushd "$pane_path"
-  #code goes here...
-popd
+
+source "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../lib/helpers.sh"
+
+if display_status_for_pane; then
+  cd "$(pane_current_path)"
+  #code goes here
+  cd -
+  echo "$output"
+fi
 
