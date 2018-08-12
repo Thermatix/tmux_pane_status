@@ -41,6 +41,11 @@ function display_status_for_pane  {
   [ "$(get_tmux_pane_opt 'pane_status')" = "1" ]
 }
 
+function check_file {
+  file="$1"
+  [ -f "$(pane_current_path)/$file" ]
+}
+
 function turn_on_pane_status {
   set_tmux_pane_opt 'pane_status' '1'
 }
@@ -50,13 +55,9 @@ function turn_off_pane_status {
 }
 
 function execute {
-  cmd=$1
-  if  display_status_for_pane ; then
-    pushd "$(pane_current_path)"
-    output="$($cmd)"
-    popd
-    echo "$output"
-  fi
+  cmd="$@"
+  output="$(cd $(pane_current_path) && ${cmd[@]})"
+  echo "$output"
 }
 
 function list_commands {
