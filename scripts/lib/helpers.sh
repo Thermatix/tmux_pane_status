@@ -18,19 +18,23 @@ function get_tmux_w_option {
 	fi
 }
 
+function pane_id {
+  echo "$(tmux display -p '#{pane_index}')"
+}
+
 function set_tmux_pane_opt {
   option_name="$1"
-  tmux set -q "@$option_name_$TMUX_PANE" "$2"
+  value=$2
+  tmux set -q "@$option_name_$(pane_id)" "$value"
 }
 
 function get_tmux_pane_opt {
   option_name="$1"
-  pane_id="$2"
-  tmux show -vq "@$option_name_$pane_id"
+  tmux show -vq "@$option_name_$(pane_id)"
 }
 
 function display_status_for {
-  echo "$(get_tmux_pane_opt "pane_status" "$TMUX_PANE")"
+  echo "$(get_tmux_pane_opt "$(pane_id)")"
 }
 
 function turn_on_pane_status {
