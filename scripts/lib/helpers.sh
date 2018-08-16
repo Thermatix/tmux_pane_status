@@ -18,8 +18,12 @@ function get_tmux_w_option {
 	fi
 }
 
-function pane_id {
-  echo "$(tmux display -p '#{pane_index}')"
+function current_pane_id {
+  echo "$(tmux display -p '#{pane_id}')"
+}
+
+function contextual_pane_id {
+  echo "$PANE_ID"
 }
 
 function pane_current_path {
@@ -29,12 +33,17 @@ function pane_current_path {
 function set_tmux_pane_opt {
   option_name="$1"
   value=$2
-  tmux set -q "@$option_name_$(pane_id)" "$value"
+  tmux set -q "@$option_name_$(current_pane_id)" "$value"
 }
 
 function get_tmux_pane_opt {
   option_name="$1"
-  tmux show -vq "@$option_name_$(pane_id)"
+  tmux show -vq "@$option_name_$(current_pane_id)"
+}
+
+function get_contextual_tmux_pane_opt {
+  option_name="$1"
+  tmux show -vq "@$option_name_$(contextual_pane_id)"
 }
 
 function display_status_for_pane  {
@@ -46,12 +55,27 @@ function check_file {
   [ -f "$(pane_current_path)/$file" ]
 }
 
+function check_dir {
+  dir="$1"
+  [ -d "$(pane_current_path)/$dir" ]
+}
+
 function turn_on_pane_status {
   set_tmux_pane_opt 'pane_status' '1'
 }
 
 function turn_off_pane_status {
   set_tmux_pane_opt 'pane_status' '0'
+}
+
+function display_message {
+  message="$1"
+  tmux display-message -p -t"$(current_pane_id)" "$message"
+}
+
+function set_pane_path {
+  $current_pane_path=$1
+  set_tmux_pane_opt 'pane_path' "$current_pane_path"
 }
 
 function execute {
@@ -66,14 +90,6 @@ function list_commands {
   for cmd in $command_list; do
     c["#{$cmd}"]="#($root/scripts/displays/$cmd.sh)"
   done
-}
-
-function cmd {
-  local root="$1"
-  local cmd="$2"
-  local key="[#{\"$cmd\"}]"
-  local value=
-  echo "$key=\"#($value)\""
 }
 
 function is_osx {

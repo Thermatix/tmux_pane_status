@@ -6,7 +6,9 @@ source "$plugin_root_dir/scripts/lib/helpers.sh"
 
 declare -A cmds
 
+
 list_commands plugin_root_dir cmds rbenv githud rust
+
 
 # for k in "${!cmds[@]}"; do
 #   echo "$k:${cmds[$k]}"

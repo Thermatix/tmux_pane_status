@@ -1,7 +1,8 @@
-#!/usr/local/bin/zsh -f
-pane_path=$1
-pane_id=$2
-pushd "$pane_path"
-  #code goes here...
-  githud zsh
-popd
+#!/usr/bin/env bash
+source "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../lib/helpers.sh"
+
+if  display_status_for_pane ; then
+  if check_dir '.git'; then
+    echo " $(execute githud tmux)"
+  fi
+fi
